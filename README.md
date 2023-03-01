@@ -23,6 +23,10 @@ $count->write(5);
 ### Effect
 Create an effect with dependencies.
 ```php
+new Effect(function () use ($count) {
+    echo "\nThe count is " . $count->read();
+})
+// or
 Effect::create(function () use ($count) {
     echo "\nThe count is " . $count->read();
 });
@@ -35,6 +39,13 @@ $firstName = new Signal('John');
 $lastName = new Signal('Smith');
 $showFullName = new Signal(true);
 
+$displayName = new Memo(function() use ($firstName, $lastName, $showFullName){
+    if(!$showFullName->read()) {
+        return $firstName->read();
+    }
+    return $firstName->read() . " " . $lastName->read();
+});
+// or
 $displayName = Memo::create(function() use ($firstName, $lastName, $showFullName){
     if(!$showFullName->read()) {
         return $firstName->read();

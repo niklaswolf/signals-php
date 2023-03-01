@@ -18,7 +18,7 @@ echo "1. Create Signal";
 $count = new Signal(0);
 
 echo "\n\n2. Create Reaction";
-Effect::create(function () use ($count) {
+new Effect(function () use ($count) {
     echo "\nThe count is " . $count->read();
 });
 
@@ -35,13 +35,13 @@ echo "\n\n1. Create signals";
 $firstName = new Signal('John');
 $lastName = new Signal('Smith');
 $showFullName = new Signal(true);
-$displayName = Memo::create(function() use ($firstName, $lastName, $showFullName){
+$displayName = new Memo(function() use ($firstName, $lastName, $showFullName){
     if(!$showFullName->read()) {
         return $firstName->read();
     }
     return $firstName->read() . " " . $lastName->read();
 });
-Effect::create(function() use ($displayName){
+new Effect(function() use ($displayName){
     echo "\nMy name is ".$displayName->read();
 });
 
