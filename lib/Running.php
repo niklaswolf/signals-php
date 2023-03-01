@@ -1,7 +1,6 @@
 <?php
 
 namespace Signals;
-require_once 'Context.php';
 
 use ArrayObject;
 use Closure;

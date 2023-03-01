@@ -1,8 +1,6 @@
 <?php
 
 namespace Signals;
-require_once 'Signal.php';
-require_once 'Effect.php';
 
 class Memo
 {

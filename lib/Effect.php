@@ -1,7 +1,6 @@
 <?php
 
 namespace Signals;
-require_once 'Running.php';
 
 class Effect
 {

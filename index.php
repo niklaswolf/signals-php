@@ -4,10 +4,11 @@
 // https://dev.to/ryansolid/building-a-reactive-library-from-scratch-1i0p
 // for PHP
 
-
-require_once './lib/Signal.php';
-require_once './lib/Effect.php';
-require_once './lib/Memo.php';
+spl_autoload_register(function($className){
+    $file = str_replace(['\\',], DIRECTORY_SEPARATOR, $className).'.php';
+    $file = str_replace('Signals/', 'lib/', $file);
+    include $file;
+});
 
 use Signals\Effect;
 use Signals\Signal;
