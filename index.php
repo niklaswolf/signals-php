@@ -11,33 +11,45 @@ spl_autoload_register(function($className){
 });
 
 use Signals\Effect;
+use Signals\Memo;
 use Signals\Signal;
 
 echo "1. Create Signal";
-$signal = new Signal(0);
+$count = new Signal(0);
 
 echo "\n\n2. Create Reaction";
-Effect::create(function () use ($signal) {
-    echo "\nFrom reactive effect: the count is " . $signal->read();
+Effect::create(function () use ($count) {
+    echo "\nThe count is " . $count->read();
 });
 
 echo "\n\n3. Set count to 5";
-$signal->write(5);
+$count->write(5);
 
 echo "\n\n4. Set count to 10";
-$signal->write(10);
+$count->write(10);
 
 
-echo "\n###### \n";
+echo "\n\n###### \n";
 
+echo "\n\n1. Create signals";
 $firstName = new Signal('John');
 $lastName = new Signal('Smith');
-$displayName = \Signals\Memo::create(function() use ($firstName, $lastName){
+$showFullName = new Signal(true);
+$displayName = Memo::create(function() use ($firstName, $lastName, $showFullName){
+    if(!$showFullName->read()) {
+        return $firstName->read();
+    }
     return $firstName->read() . " " . $lastName->read();
 });
 Effect::create(function() use ($displayName){
     echo "\nMy name is ".$displayName->read();
 });
 
-echo "\n\n1. change last name";
-$lastName->write('Doe');
+echo "\n\n2. Set showFullName: false";
+$showFullName->write(false);
+
+echo "\n\n3. Change lastName (won't trigger the effect)";
+$lastName->write('Legend');
+
+echo "\n\n4. Set showFullName: true";
+$showFullName->write(true);
