@@ -1,18 +1,13 @@
 <?php
+use Signals\Effect;
+use Signals\Memo;
+use Signals\Signal;
+
+require_once 'autoload.php';
 
 // Adaption of
 // https://dev.to/ryansolid/building-a-reactive-library-from-scratch-1i0p
 // for PHP
-
-spl_autoload_register(function($className){
-    $file = str_replace(['\\',], DIRECTORY_SEPARATOR, $className).'.php';
-    $file = str_replace('Signals/', 'lib/', $file);
-    include $file;
-});
-
-use Signals\Effect;
-use Signals\Memo;
-use Signals\Signal;
 
 echo "1. Create Signal";
 $count = new Signal(0);
